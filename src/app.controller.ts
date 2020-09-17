@@ -17,6 +17,7 @@ export class AppController {
     // response.removeHeader('Content-Type')
     // response.removeHeader('ETag')
     // response.removeHeader('Transfer-Encoding')
-    return response.writeHead(200, VK_CALLBACK_ANSWER).end()
+    response.statusCode = 200
+    response.end(VK_CALLBACK_ANSWER)
   }
 }
