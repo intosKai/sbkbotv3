@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { VK_CALLBACK_ANSWER } from './config';
 
@@ -6,7 +6,7 @@ import { VK_CALLBACK_ANSWER } from './config';
 export class AppController {
   constructor() {}
 
-  @Get('vk')
+  @Post('vk')
   async vk(@Body() request: any): Promise<string> {
     console.log('new request', JSON.stringify(request));
     return VK_CALLBACK_ANSWER;
