@@ -17,6 +17,6 @@ export class AppController {
     // response.removeHeader('Content-Type')
     // response.removeHeader('ETag')
     // response.removeHeader('Transfer-Encoding')
-    return VK_CALLBACK_ANSWER
+    return response.writeHead(200, VK_CALLBACK_ANSWER).end()
   }
 }
