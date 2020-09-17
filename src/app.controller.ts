@@ -1,12 +1,14 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Inject } from '@nestjs/common';
 import { AppService } from './app.service';
+import { VK_CALLBACK_ANSWER } from './config';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor() {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Get('vk')
+  async vk(request: any): Promise<string> {
+    console.log(request);
+    return VK_CALLBACK_ANSWER;
   }
 }
