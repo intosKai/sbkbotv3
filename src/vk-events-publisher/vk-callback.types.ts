@@ -69,6 +69,55 @@ export type TCallbackMessageEvent = {
   conversation_message_id: number;
 }
 
+export type TCallbackWallPostNewEvent = {
+  id: number;
+  owner_id: number;
+  from_id: number;
+  created_by: number;
+  date: number;
+  text: string;
+  reply_owner_id: number;
+  reply_post_id: number;
+  friends_only: number;
+  comments: {
+    count: number;
+    can_post: 0 | 1;
+    groups_can_post: 0 | 1;
+    can_close: boolean;
+    can_open: number;
+  };
+  copyright: string;
+  likes: {
+    count: number;
+    user_likes: 0 | 1;
+    can_like: 0 | 1;
+    can_publish: 0 | 1;
+  };
+  reposts: {
+    count: number;
+    user_reposted: 0 | 1;
+  };
+  views: {
+    count: number;
+  };
+  post_type: 'post' | 'copy' | 'reply' | 'postpone' | 'suggest';
+  attachments: any[];
+  get: {
+    type: string;
+    coordinates: string;
+    place: any;
+  };
+  signer_id: number;
+  copy_history: any[];
+  can_pin: 0 | 1;
+  can_delete: 0 | 1;
+  can_edit: 0 | 1;
+  is_pinned: number;
+  marked_as_ads: 0 | 1;
+  is_favorite: boolean;
+  postponed_id: number;
+}
+
 // external types
 
 export type TClientInfo = {

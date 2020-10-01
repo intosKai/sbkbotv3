@@ -3,6 +3,7 @@ import { VkEventsPublisher } from './vk-events-publisher/vk-events-publisher';
 import { CallbackType, VkCallbackRequest } from './vk-events-publisher/vk-callback.types';
 import { MessageHandler } from './vk-events-subscribers/message-handler';
 import { VkApiAdapterService } from './vk-api-adapter/vk-api-adapter.service';
+import { TypingHandler } from './vk-events-subscribers/typing-handler';
 
 @Injectable()
 export class AppService {
@@ -14,6 +15,7 @@ export class AppService {
   ) {
     this.eventPublisher = new VkEventsPublisher(vkApiAdapterService)
     this.eventPublisher.subscribe(new MessageHandler(), CallbackType.MESSAGE_NEW)
+    this.eventPublisher.subscribe(new TypingHandler(), CallbackType.MESSAGE_TYPING_STATE)
   }
 
   public process(req: VkCallbackRequest) {

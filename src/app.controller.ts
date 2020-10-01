@@ -14,7 +14,6 @@ export class AppController {
 
   @Post('vk')
   async vk(@Body() request: VkCallbackRequest, @Res() response: Response) {
-    console.log(request);
     try {
       if (request.secret !== VK_SECRET) {
         console.error(`wrong vk secret passed ${request.secret}`)
