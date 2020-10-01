@@ -28,7 +28,7 @@ export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew>{
       const r = await this.vkApiAdapterService.send({
         random_id: Date.now(),
         peer_id: context.message.peer_id,
-        message: 'Пососи',
+        message: 'пососи',
         reply_to: context.message.id === 0 ? undefined : context.message.id,
         group_id: VK_GROUP_ID,
         payload: '',
@@ -39,22 +39,21 @@ export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew>{
       const r = await this.vkApiAdapterService.send({
         random_id: Date.now(),
         peer_id: context.message.peer_id,
-        message: 'а ты гавно',
+        message: 'я король а ты гавно',
         reply_to: context.message.id === 0 ? undefined : context.message.id,
         group_id: VK_GROUP_ID,
         payload: '',
       })
       console.log(r)
     }
-    if (rand === 30) {
+    if (rand === 30 || true) {
       const r = await this.vkApiAdapterService.send({
         random_id: Date.now(),
         peer_id: context.message.peer_id,
         message: 'не пиши сюда, от тебя гавной воняет',
-        reply_to: context.message.id,
+        reply_to: context.message.id === 0 ? undefined : context.message.id,
         group_id: VK_GROUP_ID,
         payload: '',
-        chat_id: context.message.peer_id - 2000000000,
       })
       console.log(r)
     }
