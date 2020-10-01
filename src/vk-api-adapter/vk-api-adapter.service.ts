@@ -104,7 +104,7 @@ export class VkApiAdapterService {
   }
 
   public async send(data: {
-    user_id: number,
+    user_id?: number,
     random_id: number,
     peer_id: number,
     domain?: string,

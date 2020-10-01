@@ -27,7 +27,6 @@ export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew>{
     }
     if (rand === 10) {
       const r = await this.vkApiAdapterService.send({
-        user_id: context.message.from_id,
         random_id: Date.now(),
         peer_id: context.message.peer_id,
         message: 'Пососи',
@@ -39,7 +38,6 @@ export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew>{
     }
     if (rand === 20) {
       const r = await this.vkApiAdapterService.send({
-        user_id: context.message.from_id,
         random_id: Date.now(),
         peer_id: context.message.peer_id,
         message: 'а ты гавно',
