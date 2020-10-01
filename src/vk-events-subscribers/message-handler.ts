@@ -22,6 +22,7 @@ export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew>{
         reply_to: context.message.id,
         group_id: VK_GROUP_ID,
         payload: '',
+        chat_id: context.message.peer_id - 2000000000,
       })
       console.log(r)
     }
@@ -33,6 +34,7 @@ export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew>{
         reply_to: context.message.id,
         group_id: VK_GROUP_ID,
         payload: '',
+        chat_id: context.message.peer_id - 2000000000,
       })
       console.log(r)
     }
@@ -44,6 +46,7 @@ export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew>{
         reply_to: context.message.id,
         group_id: VK_GROUP_ID,
         payload: '',
+        chat_id: context.message.peer_id - 2000000000,
       })
       console.log(r)
     }
@@ -56,6 +59,7 @@ export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew>{
         reply_to: context.message.id,
         group_id: VK_GROUP_ID,
         payload: '',
+        chat_id: context.message.peer_id - 2000000000,
       })
       console.log(r)
     }

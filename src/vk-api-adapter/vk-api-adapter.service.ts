@@ -108,7 +108,7 @@ export class VkApiAdapterService {
     random_id: number,
     peer_id: number,
     domain?: string,
-    chat_id?: string,
+    chat_id?: number,
     user_ids?: string,
     message: string,
     lat?: number,
