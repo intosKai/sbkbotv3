@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { VkRequest } from '../utils/VkRequest';
 import { VK_API_TOKEN, VK_API_VERSION, VK_BASE_URL } from '../config';
-import request from 'request';
+import * as request from 'request-promise-native';
 import * as fs from 'fs';
 import { TKeyboard } from '../vk-events-publisher/vk-callback.types';
 
@@ -132,8 +132,7 @@ export class VkApiAdapterService {
     conversation_message_id: string,
     error: string,
   }>> {
-    return new Promise((resolve, reject) => {
-      request({
+    return  request({
         method: 'POST',
         url: 'https://api.vk.com/method/messages.send',
         qs: {
@@ -141,13 +140,6 @@ export class VkApiAdapterService {
           v: VK_API_VERSION,
           ...data,
         }
-      }, (err: any, response: any, body: any) => {
-        if (err) {
-          console.error(err);
-          reject(err)
-        }
-        resolve(JSON.parse(body))
-      })
-    })
-  }
+      });
+    }
 }
