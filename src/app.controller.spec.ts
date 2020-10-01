@@ -15,8 +15,11 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
-    });
+    it('should ---', async () => {
+      const r = await appController.vk({
+        event_id: '', group_id: 0, object: undefined, secret: '', type: ''
+      }, undefined)
+      console.log(r)
+    })
   });
 });

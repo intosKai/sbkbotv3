@@ -1,31 +1,39 @@
-import { Body, Controller, Headers, Post, Res } from '@nestjs/common';
+import { Body, Controller, Inject, Post, Res } from '@nestjs/common';
 import { Response } from 'express'
 import { VK_CALLBACK_ANSWER, VK_SECRET } from './config';
+import { VkCallbackRequest } from './vk-events-publisher/vk-callback.types';
+import { AppService } from './app.service';
 
-type VkCallbackRequest = {
-  type: string;
-  group_id: number;
-  secret: string;
-}
 
 @Controller()
 export class AppController {
-  constructor() {}
+  constructor(
+    @Inject(AppService)
+    private readonly appService: AppService,
+  ) {}
 
   @Post('vk')
   async vk(@Body() request: VkCallbackRequest, @Res() response: Response) {
-    console.log('new request', JSON.stringify(request));
+    console.log(request);
+    try {
+      if (request.secret !== VK_SECRET) {
+        console.error(`wrong vk secret passed ${request.secret}`)
+        response.status(400).end()
+        return
+      }
 
-    if (request.secret !== VK_SECRET) {
+      response.statusCode = 200
+
+      if (request.type === 'confirmation') {
+        response.end(VK_CALLBACK_ANSWER)
+        return
+      }
+
+      this.appService.process(request)
+
+      response.end('ok')
+    } catch (e) {
       response.status(400).end()
     }
-
-    response.statusCode = 200
-
-    if (request.type === 'confirmation') {
-      response.end(VK_CALLBACK_ANSWER)
-    }
-
-    response.end('ok')
   }
 }
