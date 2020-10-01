@@ -1,7 +1,9 @@
 import { CallbackType, TCallbacks, VkCallbackRequest } from './vk-callback.types';
+import { VkEventContext } from './vk-event-context';
+import { VkApiAdapterService } from '../vk-api-adapter/vk-api-adapter.service';
 
 export interface VkEventSubscriber<T> {
-  update(context: T)
+  update(context: VkEventContext, event: T)
 }
 
 type SubscribersArray = VkEventSubscriber<TCallbacks>[][]
@@ -9,7 +11,9 @@ type SubscribersArray = VkEventSubscriber<TCallbacks>[][]
 export class VkEventsPublisher {
   private readonly subscribers: SubscribersArray;
 
-  constructor() {
+  constructor(
+    private readonly vkApiAdapterService: VkApiAdapterService,
+  ) {
     this.subscribers = []
 
     for (const type in CallbackType) {
@@ -29,9 +33,14 @@ export class VkEventsPublisher {
   }
 
   public notify(req: VkCallbackRequest) {
-    console.log('notify')
+    const context = new VkEventContext(
+      req.group_id,
+      req.event_id,
+      CallbackType[req.type],
+      this.vkApiAdapterService,
+    );
     for (const sub of this.subscribers[req.type]) {
-      sub.update(req.object)
+      sub.update(context, req.object);
     }
   }
 }

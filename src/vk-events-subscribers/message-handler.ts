@@ -1,60 +1,26 @@
 import { VkEventSubscriber } from '../vk-events-publisher/vk-events-publisher';
 import { TCallbackMessageNew } from '../vk-events-publisher/vk-callback.types';
-import { VkApiAdapterService } from '../vk-api-adapter/vk-api-adapter.service';
-import { VK_GROUP_ID } from '../config';
+import { VkEventContext } from '../vk-events-publisher/vk-event-context';
 
 export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew>{
   constructor(
-    private readonly vkApiAdapterService: VkApiAdapterService,
   ) {
   }
 
-  async update(context: TCallbackMessageNew) {
-    console.log('received new message')
+  async update(context: VkEventContext, event: TCallbackMessageNew) {
     const rand = Math.floor(Math.random() * 50);
     // const rand = 25;
     if (rand === 5) {
-      const r = await this.vkApiAdapterService.send({
-        random_id: Date.now(),
-        peer_id: context.message.peer_id,
-        message: 'I AM ALIVE',
-        reply_to: context.message.id === 0 ? undefined : context.message.id,
-        group_id: VK_GROUP_ID,
-        payload: '',
-      })
+      const r = await context.reply('I AM ALIVE', event, true);
       console.log(r)
-    }
-    if (rand === 10) {
-      const r = await this.vkApiAdapterService.send({
-        random_id: Date.now(),
-        peer_id: context.message.peer_id,
-        message: 'пососи',
-        reply_to: context.message.id === 0 ? undefined : context.message.id,
-        group_id: VK_GROUP_ID,
-        payload: '',
-      })
+    } else if (rand === 10) {
+      const r = await context.reply('пососи', event, true);
       console.log(r)
-    }
-    if (rand === 20) {
-      const r = await this.vkApiAdapterService.send({
-        random_id: Date.now(),
-        peer_id: context.message.peer_id,
-        message: 'я король а ты гавно',
-        reply_to: context.message.id === 0 ? undefined : context.message.id,
-        group_id: VK_GROUP_ID,
-        payload: '',
-      })
+    } else if (rand === 20) {
+      const r = await context.reply('я король а ты гавно', event, true);
       console.log(r)
-    }
-    if (rand === 30) {
-      const r = await this.vkApiAdapterService.send({
-        random_id: Date.now(),
-        peer_id: context.message.peer_id,
-        message: 'не пиши сюда, от тебя гавной воняет',
-        reply_to: context.message.id === 0 ? undefined : context.message.id,
-        group_id: VK_GROUP_ID,
-        payload: '',
-      })
+    } else if (rand === 30) {
+      const r = await context.reply('не пиши сюда, от тебя гавной воняет', event, true);
       console.log(r)
     }
   }

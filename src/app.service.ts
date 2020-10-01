@@ -12,10 +12,8 @@ export class AppService {
     @Inject(VkApiAdapterService)
     private readonly vkApiAdapterService: VkApiAdapterService,
   ) {
-    this.eventPublisher = new VkEventsPublisher()
-    this.eventPublisher.subscribe(new MessageHandler(
-      this.vkApiAdapterService,
-    ), CallbackType.MESSAGE_NEW)
+    this.eventPublisher = new VkEventsPublisher(vkApiAdapterService)
+    this.eventPublisher.subscribe(new MessageHandler(), CallbackType.MESSAGE_NEW)
   }
 
   public process(req: VkCallbackRequest) {

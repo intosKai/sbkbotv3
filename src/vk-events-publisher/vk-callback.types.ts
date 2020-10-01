@@ -29,20 +29,21 @@ export type TCallbackMessageNew = {
 export type TDirectMessage = {
   id: number;
   date: number;
-  peer_id: number;
+  peer_id?: number;
   from_id: number;
   text: string;
   random_id: number;
-  ref: string;
-  ref_source: string;
+  ref?: string;
+  ref_source?: string;
   attachments: any[]; // https://vk.com/dev/objects/attachments_m
   important: boolean;
-  geo: TGeo;
-  payload: string;
-  keyboard: TKeyboard; // https://vk.com/dev/bots_docs_3?f=4.+%D0%9A%D0%BB%D0%B0%D0%B2%D0%B8%D0%B0%D1%82%D1%83%D1%80%D1%8B+%D0%B4%D0%BB%D1%8F+%D0%B1%D0%BE%D1%82%D0%BE%D0%B2
+  geo?: TGeo;
+  payload?: string;
+  keyboard?: TKeyboard; // https://vk.com/dev/bots_docs_3?f=4.+%D0%9A%D0%BB%D0%B0%D0%B2%D0%B8%D0%B0%D1%82%D1%83%D1%80%D1%8B+%D0%B4%D0%BB%D1%8F+%D0%B1%D0%BE%D1%82%D0%BE%D0%B2
   fwd_messages: TDirectMessage[];
-  reply_messages: TDirectMessage;
-  action: TAction;
+  reply_messages?: TDirectMessage;
+  action?: TAction;
+  conversation_message_id?: number;
 }
 
 export type TCallbackMessageAllow = {
