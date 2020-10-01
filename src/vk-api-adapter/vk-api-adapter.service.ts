@@ -132,7 +132,7 @@ export class VkApiAdapterService {
     conversation_message_id: string,
     error: string,
   }>> {
-    return  request({
+    return request({
         method: 'POST',
         url: 'https://api.vk.com/method/messages.send',
         qs: {
