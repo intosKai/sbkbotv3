@@ -3,6 +3,7 @@ import { VkRequest } from '../utils/VkRequest';
 import { VK_API_TOKEN, VK_API_VERSION, VK_BASE_URL } from '../config';
 import request from 'request';
 import * as fs from 'fs';
+import { TKeyboard } from '../vk-events-publisher/vk-callback.types';
 
 @Injectable()
 export class VkApiAdapterService {
@@ -91,6 +92,54 @@ export class VkApiAdapterService {
               contentType: null
             }
           }
+        }
+      }, (err: any, response: any, body: any) => {
+        if (err) {
+          console.error(err);
+          reject(err)
+        }
+        resolve(JSON.parse(body))
+      })
+    })
+  }
+
+  public async send(data: {
+    user_id: number,
+    random_id: number,
+    peer_id: number,
+    domain?: string,
+    chat_id?: string,
+    user_ids?: string,
+    message: string,
+    lat?: number,
+    long?: number,
+    attachment?: string,
+    reply_to?: number,
+    forward_messages?: string,
+    sticker_id?: string,
+    group_id: string,
+    keyboard?: TKeyboard,
+    template?: any,
+    payload: string,
+    content_source?: string,
+    dont_parse_links?: 1 | 0,
+    disable_mentions?: 1 | 0,
+    intent?: any,
+    subscribe_id?: any,
+  }): Promise<string | Array<{
+    peer_id: string,
+    message_id: string,
+    conversation_message_id: string,
+    error: string,
+  }>> {
+    return new Promise((resolve, reject) => {
+      request({
+        method: 'POST',
+        url: 'https://api.vk.com/method/messages.send',
+        qs: {
+          access_token: VK_API_TOKEN,
+          v: VK_API_VERSION,
+          ...data,
         }
       }, (err: any, response: any, body: any) => {
         if (err) {

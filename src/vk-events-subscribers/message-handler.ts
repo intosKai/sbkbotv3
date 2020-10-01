@@ -1,8 +1,29 @@
 import { VkEventSubscriber } from '../vk-events-publisher/vk-events-publisher';
 import { TCallbackMessageNew } from '../vk-events-publisher/vk-callback.types';
+import { VkApiAdapterService } from '../vk-api-adapter/vk-api-adapter.service';
+import { VK_GROUP_ID } from '../config';
 
 export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew>{
-  update(context: TCallbackMessageNew) {
-    console.log(`updated with message ${JSON.stringify(context)}`)
+  constructor(
+    private readonly vkApiAdapterService: VkApiAdapterService,
+  ) {
+  }
+
+  async update(context: TCallbackMessageNew) {
+    console.log('received new message')
+    // const rand = Math.floor(Math.random() * 50);
+    const rand = 25;
+    if (rand === 25) {
+      const r = await this.vkApiAdapterService.send({
+        user_id: context.message.from_id,
+        random_id: Date.now(),
+        peer_id: context.message.peer_id,
+        message: 'Ну здарова',
+        reply_to: context.message.id,
+        group_id: VK_GROUP_ID,
+        payload: '',
+      })
+      console.log(r)
+    }
   }
 }
