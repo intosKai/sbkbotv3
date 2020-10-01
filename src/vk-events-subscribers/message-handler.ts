@@ -46,7 +46,7 @@ export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew>{
       })
       console.log(r)
     }
-    if (rand === 30 || true) {
+    if (rand === 30) {
       const r = await this.vkApiAdapterService.send({
         random_id: Date.now(),
         peer_id: context.message.peer_id,
