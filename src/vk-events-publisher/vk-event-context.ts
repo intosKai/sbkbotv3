@@ -30,6 +30,10 @@ export class VkEventContext {
     });
   }
 
+  get vkApi(): VkApiAdapterService {
+    return this.vkApiAdapterService;
+  }
+
   get groupId(): number {
     return this.group_id;
   }

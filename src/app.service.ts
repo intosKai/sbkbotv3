@@ -4,6 +4,7 @@ import { CallbackType, VkCallbackRequest } from './vk-events-publisher/vk-callba
 import { MessageHandler } from './vk-events-subscribers/message-handler';
 import { VkApiAdapterService } from './vk-api-adapter/vk-api-adapter.service';
 import { TypingHandler } from './vk-events-subscribers/typing-handler';
+import { DvachApi } from './apis/dvach';
 
 @Injectable()
 export class AppService {
@@ -14,7 +15,7 @@ export class AppService {
     private readonly vkApiAdapterService: VkApiAdapterService,
   ) {
     this.eventPublisher = new VkEventsPublisher(vkApiAdapterService)
-    this.eventPublisher.subscribe(new MessageHandler(), CallbackType.MESSAGE_NEW)
+    this.eventPublisher.subscribe(new MessageHandler(new DvachApi()), CallbackType.MESSAGE_NEW)
     this.eventPublisher.subscribe(new TypingHandler(), CallbackType.MESSAGE_TYPING_STATE)
   }
 
