@@ -24,7 +24,7 @@ export class VkEventContext {
       random_id: Date.now(),
       peer_id: event.message.peer_id,
       user_ids: event.message.peer_id ? undefined : event.message.from_id.toString(),
-      reply_to: replyTo ? event.message.id || undefined : undefined,
+      forward_messages: replyTo ? event.message.id.toString() || undefined : undefined,
       group_id: this.group_id.toString(),
       ...params,
     });

@@ -31,8 +31,9 @@ export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew>{
     const rand = Math.floor(Math.random() * 25);
     // const rand = 25;
     if (rand === 5) {
+      console.log(event);
       const r = await context.reply(this.phrases[Math.floor(Math.random() * this.phrases.length)], event, true);
-      console.log(r)
+      console.log(r);
       return
     }
 
