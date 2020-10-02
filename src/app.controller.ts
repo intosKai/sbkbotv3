@@ -32,6 +32,7 @@ export class AppController {
 
       response.end('ok')
     } catch (e) {
+      console.error(e);
       response.status(400).end()
     }
   }

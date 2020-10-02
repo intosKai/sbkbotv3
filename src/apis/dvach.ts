@@ -61,8 +61,8 @@ export class DvachApi {
   constructor() {
   }
 
-  public async getCatalogNum(table: string): Promise<Thread[]> {
-    return request.get(`https://2ch.hk/${table}/catalog_num.json`);
+  public async getCatalogNum(table: string): Promise<TGetCatalogNumResponse> {
+    return JSON.parse(await request.get(`https://2ch.hk/${table}/catalog_num.json`));
   }
 
   public async getImage(path: string): Promise<string> {

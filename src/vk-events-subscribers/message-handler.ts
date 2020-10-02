@@ -2,8 +2,6 @@ import { VkEventSubscriber } from '../vk-events-publisher/vk-events-publisher';
 import { TCallbackMessageNew } from '../vk-events-publisher/vk-callback.types';
 import { VkEventContext } from '../vk-events-publisher/vk-event-context';
 import { DvachApi } from '../apis/dvach';
-import * as request from 'request-promise-native';
-import fs from 'fs';
 import { VkApiAdapterService } from '../vk-api-adapter/vk-api-adapter.service';
 import { ImgflipApi } from '../apis/imgflip';
 
@@ -73,9 +71,9 @@ export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew> {
         await context.reply('Такого треда нет', event, true);
       }
 
-      const rnd = Math.floor(Math.random() * res.length);
+      const rnd = Math.floor(Math.random() * res.threads.length);
 
-      const thread = res[rnd];
+      const thread = res.threads[rnd];
       // let filesStr: string[] = [];
       //
       // if (thread && thread.files_count > 0 && thread.files) {
@@ -107,7 +105,6 @@ export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew> {
       //   }
       // }
       // await ctx.reply(thread.comment, filesStr.join(','));
-
       await context.reply(thread.comment, event, true);
       return;
     }
