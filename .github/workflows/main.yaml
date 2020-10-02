@@ -44,6 +44,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             docker pull intoskai/sbkbotv3:latest
-            CONTAINER_ID=$(docker ps | grep intoskai/sbkbotv3:latest | cut -d" " -f1)
+            CONTAINER_ID=$(docker ps | grep '0.0.0.0:80->3000/tcp' | cut -d" " -f1)
             docker stop ${CONTAINER_ID}
             docker run --restart unless-stopped -d -p 80:3000 -e VK_API_VERSION=${{ secrets.VK_API_VERSION }} -e VK_API_TOKEN=${{ secrets.VK_API_TOKEN }} -e VK_SECRET=${{ secrets.VK_SECRET }} -e VK_GROUP_ID=${{ secrets.VK_GROUP_ID }} -e VK_CALLBACK_ANSWER=${{ secrets.VK_CALLBACK_ANSWER }} -e secrets.VK_BASE_URL=${{ secrets.VK_BASE_URL }} intoskai/sbkbotv3:latest
