@@ -11,16 +11,16 @@ export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew>{
     const rand = Math.floor(Math.random() * 50);
     // const rand = 25;
     if (rand === 5) {
-      const r = await context.reply('I AM ALIVE', event, true);
+      const r = await context.reply('I AM ALIVE', event, false);
       console.log(r)
     } else if (rand === 10) {
-      const r = await context.reply('пососи', event, true);
+      const r = await context.reply('пососи', event, false);
       console.log(r)
     } else if (rand === 20) {
-      const r = await context.reply('я король а ты гавно', event, true);
+      const r = await context.reply('я король а ты гавно', event, false);
       console.log(r)
     } else if (rand === 30) {
-      const r = await context.reply('не пиши сюда, от тебя гавной воняет', event, true);
+      const r = await context.reply('не пиши сюда, от тебя гавной воняет', event, false);
       console.log(r)
     }
   }

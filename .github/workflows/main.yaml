@@ -31,8 +31,6 @@ jobs:
           tags: |
             intoskai/sbkbotv3:latest
             intoskai/sbkbotv3:${{ github.sha }}
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
