@@ -73,9 +73,9 @@ export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew> {
         await context.reply('Такого треда нет', event, true);
       }
 
-      const rnd = Math.floor(Math.random() * res.threads.length);
+      const rnd = Math.floor(Math.random() * res.length);
 
-      const thread = res.threads[rnd];
+      const thread = res[rnd];
       // let filesStr: string[] = [];
       //
       // if (thread && thread.files_count > 0 && thread.files) {

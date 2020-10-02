@@ -22,11 +22,46 @@ type Thread = {
   trip: string,
 }
 
+type TGetCatalogNumResponse = {
+  Board: string;
+  BoardInfo: string;
+  BoardInfoOuter: string;
+  BoardName: string;
+  advert_bottom_image: string;
+  advert_bottom_link: string;
+  advert_mobile_image: string;
+  advert_mobile_link: string;
+  advert_top_image: string;
+  advert_top_link: string;
+  board_banner_image: string;
+  board_banner_link: string;
+  bump_limit: number
+  default_name: string;
+  max_files_size: number;
+  threads: Thread[]
+}
+
+type File = {
+  displayname: string,
+  fullname: string,
+  height: number,
+  md5: string,
+  name: string,
+  nsfw: number,
+  path: string,
+  size: number,
+  thumbnail: string,
+  tn_height: number,
+  tn_width: number,
+  type: number,
+  width: number,
+}
+
 export class DvachApi {
   constructor() {
   }
 
-  public async getCatalogNum(table: string): Promise<{ threads: Thread[] }> {
+  public async getCatalogNum(table: string): Promise<Thread[]> {
     return request.get(`https://2ch.hk/${table}/catalog_num.json`);
   }
 
