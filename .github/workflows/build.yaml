@@ -24,7 +24,6 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          platforms: linux/amd64,linux/386
           push: true
           tags: intoskai/sbkbotv3:latest
       - name: Image digest
