@@ -28,3 +28,10 @@ jobs:
           tags: intoskai/sbkbotv3:latest
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
+      - name: Setup SSH
+        uses: MrSquaare/ssh-setup-action@v1
+        with:
+          host: 185.87.48.54
+          private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Pull latest repo
+        run: docker pull intoskai/sbkbotv3:latest
