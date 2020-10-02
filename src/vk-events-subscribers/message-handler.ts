@@ -33,6 +33,19 @@ export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew>{
     if (rand === 5) {
       const r = await context.reply(this.phrases[Math.floor(Math.random() * this.phrases.length)], event, true);
       console.log(r)
+      return
+    }
+
+    if (event.message.text === '/дембель') {
+      const r = await context.reply('Васе осталось служить еще годик', event, true);
+      console.log(r);
+      return
+    }
+
+    if (/\/2ch/.test(event.message.text)) {
+      const r = await context.reply('сам ищи смешные треды', event, true)
+      console.log(r)
+      return
     }
   }
 }
