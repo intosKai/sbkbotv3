@@ -2,12 +2,17 @@ import { VkEventSubscriber } from '../vk-events-publisher/vk-events-publisher';
 import { TCallbackMessageNew } from '../vk-events-publisher/vk-callback.types';
 import { VkEventContext } from '../vk-events-publisher/vk-event-context';
 import { DvachApi } from '../apis/dvach';
+import * as request from 'request-promise-native';
+import fs from 'fs';
+import { VkApiAdapterService } from '../vk-api-adapter/vk-api-adapter.service';
+import { ImgflipApi } from '../apis/imgflip';
 
-export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew>{
+export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew> {
   private readonly phrases: string[];
 
   constructor(
     private readonly dvachApi: DvachApi,
+    private readonly imgflipApi: ImgflipApi,
   ) {
     this.phrases = [
       'эта сука хочет денег',
@@ -26,7 +31,7 @@ export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew>{
       'пососи',
       'не пиши сюда, от тебя гавной воняет',
       'ты мой краш',
-    ]
+    ];
   }
 
   async update(context: VkEventContext, event: TCallbackMessageNew) {
@@ -36,13 +41,13 @@ export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew>{
       console.log(event);
       const r = await context.reply(this.phrases[Math.floor(Math.random() * this.phrases.length)], event, true);
       console.log(r);
-      return
+      return;
     }
 
     if (event.message.text === '/дембель') {
       const r = await context.reply('Васе осталось служить еще годик', event, true);
       console.log(r);
-      return
+      return;
     }
 
     if (/\/2ch/.test(event.message.text)) {
@@ -59,7 +64,7 @@ export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew>{
       const table = event.message.text.split(' ');
       if (!table[1]) {
         await context.reply('Используй: /2ch table', event, true);
-        return
+        return;
       }
 
       const res = await this.dvachApi.getCatalogNum(table[1].trim());
@@ -104,7 +109,39 @@ export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew>{
       // await ctx.reply(thread.comment, filesStr.join(','));
 
       await context.reply(thread.comment, event, true);
-      return
+      return;
+    }
+  }
+
+  public async generateMeme(texts: string[], peer_id: number, vkApi: VkApiAdapterService) {
+    const resp = await this.imgflipApi.getMemes();
+    if (resp.success) {
+      const filtered = resp.data.memes.filter((i) => i.box_count === texts.length);
+      if (filtered.length > 0) {
+        let rnd = Math.floor(Math.random() * filtered.length);
+        let random_id = filtered[rnd].id;
+
+        const image = await this.imgflipApi.captionImage(random_id, texts);
+
+        if (image.success) {
+          await ImgflipApi.saveImg(image.data.url, 'meme.jpg');
+          const uploadServer = await vkApi.getMessageUploadServer(peer_id.toString());
+          const uploaded = await vkApi.postUploadImage(uploadServer.response.upload_url, 'meme.jpg');
+
+          const photo = await vkApi.saveMessagesPhoto({
+            photo: uploaded.photo,
+            server: uploaded.server,
+            hash: uploaded.hash,
+          });
+
+          // @ts-ignore
+          console.log('photo' + photo.response[0].owner_id + '_' + photo.response[0].id)
+        } else {
+          console.error(image);
+        }
+      }
+    } else {
+      console.error(resp);
     }
   }
 }

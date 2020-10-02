@@ -5,6 +5,8 @@ import { MessageHandler } from './vk-events-subscribers/message-handler';
 import { VkApiAdapterService } from './vk-api-adapter/vk-api-adapter.service';
 import { TypingHandler } from './vk-events-subscribers/typing-handler';
 import { DvachApi } from './apis/dvach';
+import { ImgflipApi } from './apis/imgflip';
+import { IMGFLIP_PASSWORD, IMGFLIP_USERNAME } from './config';
 
 @Injectable()
 export class AppService {
@@ -14,13 +16,19 @@ export class AppService {
     @Inject(VkApiAdapterService)
     private readonly vkApiAdapterService: VkApiAdapterService,
   ) {
-    this.eventPublisher = new VkEventsPublisher(vkApiAdapterService)
-    this.eventPublisher.subscribe(new MessageHandler(new DvachApi()), CallbackType.MESSAGE_NEW)
-    this.eventPublisher.subscribe(new TypingHandler(), CallbackType.MESSAGE_TYPING_STATE)
+    this.eventPublisher = new VkEventsPublisher(vkApiAdapterService);
+    this.eventPublisher.subscribe(
+      new MessageHandler(
+        new DvachApi(),
+        new ImgflipApi(IMGFLIP_USERNAME, IMGFLIP_PASSWORD)
+      ),
+      CallbackType.MESSAGE_NEW,
+    );
+    this.eventPublisher.subscribe(new TypingHandler(), CallbackType.MESSAGE_TYPING_STATE);
   }
 
   public process(req: VkCallbackRequest) {
-    this.eventPublisher.notify(req)
+    this.eventPublisher.notify(req);
   }
 
 }
