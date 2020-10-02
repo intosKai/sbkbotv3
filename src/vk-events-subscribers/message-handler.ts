@@ -28,10 +28,10 @@ export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew>{
   }
 
   async update(context: VkEventContext, event: TCallbackMessageNew) {
-    const rand = Math.floor(Math.random() * 50);
+    const rand = Math.floor(Math.random() * 25);
     // const rand = 25;
     if (rand === 5) {
-      const r = await context.reply(this.phrases[Math.floor(Math.random() * this.phrases.length)], event, false);
+      const r = await context.reply(this.phrases[Math.floor(Math.random() * this.phrases.length)], event, true);
       console.log(r)
     }
   }
