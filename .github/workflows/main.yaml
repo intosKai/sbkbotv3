@@ -1,11 +1,14 @@
-name: ci
+name: Build & Deploy
 
 on:
   push:
     branches: master
+  pull_request:
+    branches: master
 
 jobs:
-  path-context:
+  build:
+    name: Build image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,13 +28,20 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: intoskai/sbkbotv3:latest
+          tags: |
+            intoskai/sbkbotv3:latest
+            intoskai/sbkbotv3:${{ github.sha }}
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
-      - name: Setup SSH
-        uses: MrSquaare/ssh-setup-action@v1
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
         with:
-          host: 185.87.48.54
-          private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-      - name: Pull latest repo
-        run: docker pull intoskai/sbkbotv3:latest
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: whoami
+
