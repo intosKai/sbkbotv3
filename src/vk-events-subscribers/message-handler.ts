@@ -56,17 +56,15 @@ export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew> {
       return;
     }
 
-    if (/\/2ch/.test(event.message.text)) {
-      // const delay = 60 * 2;
-      // const timeout = this.timeouts.get('2ch');
-      // const offset = +new Date() / 1000;
-      // if (timeout && offset - timeout < delay) {
-      //   ctx.reply('Еще не время, жди ' + Math.floor(delay - (offset - timeout)) + ' секунд');
-      //   return;
-      // } else {
-      //   this.timeouts.set('2ch', +new Date() / 1000)
-      // }
+    if (/мазда/i.test(event.message.text)) {
+      const r = await context.vkApi.removeChatUser( `${event.message.peer_id - 2000000000}`, event.message.from_id);
+      console.log(r);
+      await context.reply('получай в жбан, гнилоеб', event);
+      return;
+    }
 
+
+    if (/\/2ch/.test(event.message.text)) {
       const table = event.message.text.split(' ');
       if (!table[1]) {
         await context.reply('Используй: /2ch table', event, true);
