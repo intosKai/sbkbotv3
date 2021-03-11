@@ -86,34 +86,34 @@ export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew> {
       this.lastPidor = profiles[Math.floor(Math.random() * profiles.length)];
       this.lastPidorTime = Date.now();
       setTimeout(() => {
-        context.reply('Запуск анального зонда', event);
+        context.reply('🤖🤖Запуск анального зонда👀👀', event);
       }, 1000);
       setTimeout(() => {
-        context.reply('Опрашиваем карбодедов на кладбище', event);
+        context.reply('🐸🐸Опрашиваем карбодедов на кладбище⁉⁉', event);
       }, 2000);
       setTimeout(() => {
-        context.reply('Зашли в клуб шорт диглов, чтобы провести опрос', event);
+        context.reply('⚠⚠Зашли в клуб шорт диглов, чтобы провести опрос🆘🆘', event);
       }, 3000);
       setTimeout(() => {
-        context.reply('Крутим втек до сраки', event);
+        context.reply('⏲⏲Крутим втек до сраки👯‍♂👯‍♂', event);
       }, 4000);
       setTimeout(() => {
-        context.reply('Рассматриваем чью-то сперму через призму бытия', event);
+        context.reply('💉💉Рассматриваем чью-то сперму через призму бытия❓❓', event);
       }, 5000);
       setTimeout(() => {
-        context.reply('Требуем фул ребилд копейки', event);
+        context.reply('💊💊Требуем фул ребилд копейки🔞🔞', event);
       }, 6000);
       setTimeout(() => {
-        context.reply('Заходим на форум владельцев рб20', event);
+        context.reply('🌚🌚Заходим на форум владельцев рб20🌈🌈', event);
       }, 7000);
       setTimeout(() => {
-        context.reply('Проверка фитухи очка', event);
+        context.reply('💦💦Проверка фитухи очка💫💫', event);
       }, 8000);
       setTimeout(() => {
-        context.reply('Есть пробитие!', event);
+        context.reply('☢☢Есть пробитие!💥💥', event);
       }, 9000);
       setTimeout(() => {
-        context.reply(`А самый грязный пидор дня сегодня ${this.lastPidor.first_name} ${this.lastPidor.last_name} @id${this.lastPidor.id}`, event);
+        context.reply(`🥇🥇А самый грязный пидор дня сегодня ${this.lastPidor.first_name} ${this.lastPidor.last_name} @id${this.lastPidor.id} 🏅🏅`, event);
       }, 10000);
       return;
     }
