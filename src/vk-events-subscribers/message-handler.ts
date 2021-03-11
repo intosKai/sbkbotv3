@@ -86,7 +86,7 @@ export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew> {
       this.lastPidor = profiles[Math.floor(Math.random() * profiles.length)];
       this.lastPidorTime = Date.now();
       setTimeout(() => {
-        context.reply('🤖🤖Запуск анального зонда👀👀', event);
+        context.reply('🤖🤖Анальное зондированиее активировано👀👀', event);
       }, 0);
       setTimeout(() => {
         context.reply('🐸🐸Опрашиваем карбодедов на кладбище⁉⁉', event);
