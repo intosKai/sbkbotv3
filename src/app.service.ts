@@ -6,7 +6,8 @@ import { VkApiAdapterService } from './vk-api-adapter/vk-api-adapter.service';
 import { TypingHandler } from './vk-events-subscribers/typing-handler';
 import { DvachApi } from './apis/dvach';
 import { ImgflipApi } from './apis/imgflip';
-import { IMGFLIP_PASSWORD, IMGFLIP_USERNAME } from './config';
+import { IMGFLIP_PASSWORD, IMGFLIP_USERNAME, VK_API_TOKEN } from './config';
+import { ConsoleLogger, VKApi } from 'node-vk-sdk';
 
 @Injectable()
 export class AppService {
@@ -16,11 +17,17 @@ export class AppService {
     @Inject(VkApiAdapterService)
     private readonly vkApiAdapterService: VkApiAdapterService,
   ) {
+    const vkApi = new VKApi({
+      logger: new ConsoleLogger(),
+      token: VK_API_TOKEN,
+    });
+
     this.eventPublisher = new VkEventsPublisher(vkApiAdapterService);
     this.eventPublisher.subscribe(
       new MessageHandler(
         new DvachApi(),
-        new ImgflipApi(IMGFLIP_USERNAME, IMGFLIP_PASSWORD)
+        new ImgflipApi(IMGFLIP_USERNAME, IMGFLIP_PASSWORD),
+        vkApi
       ),
       CallbackType.MESSAGE_NEW,
     );
