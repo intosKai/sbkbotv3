@@ -4,6 +4,7 @@ import { VkEventContext } from '../vk-events-publisher/vk-event-context';
 import { DvachApi } from '../apis/dvach';
 import { VkApiAdapterService } from '../vk-api-adapter/vk-api-adapter.service';
 import { ImgflipApi } from '../apis/imgflip';
+import { VKApi } from 'node-vk-sdk';
 
 export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew> {
   private readonly phrases: string[];
@@ -11,6 +12,7 @@ export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew> {
   constructor(
     private readonly dvachApi: DvachApi,
     private readonly imgflipApi: ImgflipApi,
+    private readonly vkApi: VKApi
   ) {
     this.phrases = [
       'эта сука хочет денег',
@@ -57,8 +59,15 @@ export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew> {
     }
 
     if (/мазда/i.test(event.message.text)) {
-      const r = await context.vkApi.removeChatUser( `${event.message.peer_id - 2000000000}`, event.message.from_id);
-      console.log(r);
+      try {
+        const res = await this.vkApi.messagesRemoveChatUser({
+          chat_id: Number(event.message.peer_id) - 2000000000,
+          user_id: event.message.from_id
+        })
+      } catch (e) {
+        console.error(e);
+        await context.reply('ну и хуйня', event);
+      }
       await context.reply('получай в жбан, гнилоеб', event);
       return;
     }
