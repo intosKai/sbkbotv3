@@ -5,9 +5,12 @@ import { DvachApi } from '../apis/dvach';
 import { VkApiAdapterService } from '../vk-api-adapter/vk-api-adapter.service';
 import { ImgflipApi } from '../apis/imgflip';
 import { VKApi } from 'node-vk-sdk';
+import { UsersUserFull } from 'node-vk-sdk/distr/src/generated/Models';
 
 export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew> {
   private readonly phrases: string[];
+  private lastPidorTime: number | undefined;
+  private lastPidor: UsersUserFull;
 
   constructor(
     private readonly dvachApi: DvachApi,
@@ -70,6 +73,53 @@ export class MessageHandler implements VkEventSubscriber<TCallbackMessageNew> {
       }
       await context.reply('получай в жбан, гнилоеб', event);
       return;
+    }
+
+    if (/\/pidordaily/.test(event.message.text)) {
+      if (this.lastPidorTime && Date.now() - this.lastPidorTime < 1000 * 60 * 60 * 24) {
+        context.reply('Рановато будет', event);
+        return;
+      }
+      const { profiles } = await this.vkApi.messagesGetConversationMembers({
+        peer_id: event.message.peer_id,
+      });
+      this.lastPidor = profiles[Math.floor(Math.random() * profiles.length)];
+      this.lastPidorTime = Date.now();
+      setTimeout(() => {
+        context.reply('Запуск анального зонда', event);
+      }, 1000);
+      setTimeout(() => {
+        context.reply('Опрашиваем карбодедов на кладбище', event);
+      }, 2000);
+      setTimeout(() => {
+        context.reply('Зашли в клуб шорт диглов, чтобы провести опрос', event);
+      }, 3000);
+      setTimeout(() => {
+        context.reply('Крутим втек до сраки', event);
+      }, 4000);
+      setTimeout(() => {
+        context.reply('Рассматриваем чью-то сперму через призму бытия', event);
+      }, 5000);
+      setTimeout(() => {
+        context.reply('Требуем фул ребилд копейки', event);
+      }, 6000);
+      setTimeout(() => {
+        context.reply('Заходим на форум владельцев рб20', event);
+      }, 7000);
+      setTimeout(() => {
+        context.reply('Проверка фитухи очка', event);
+      }, 8000);
+      setTimeout(() => {
+        context.reply('Есть пробитие!', event);
+      }, 9000);
+      setTimeout(() => {
+        context.reply(`А самый грязный пидор дня сегодня ${this.lastPidor.first_name} ${this.lastPidor.last_name} @id${this.lastPidor.id}`, event);
+      }, 10000);
+      return;
+    }
+
+    if (/\/lastpidor/.test(event.message.text)) {
+      context.reply(`Если ты забыл чья жопа сегодня на прицеле, то я тебе скажу, это @id${this.lastPidor.id}`, event);
     }
 
 
